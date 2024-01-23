@@ -1,0 +1,79 @@
+{% extends 'templatte/templateadmin.html' %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="{{ url_for('dashboard_page.dashboard') }}">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <!-- MAIN CONTENT-->
+    <div class="section__content section__content--p30">
+        <div class="container-fluid mt-4">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                <p class="text-right mb-3"><a class="btn btn-info" href="/admin/kategori/tambahkategori"><i
+                            class="bi bi-plus-lg"></i> Tambah Data</a></p>
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table id="daTable" class="table table-borderless table-data3">
+                            <thead>
+                            <tr>
+                                <th class="text-center col-md-1">#</th>
+                                <th class="text-center col-md-3">Kategori</th>
+                                <th class="text-center col-md-2">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set index = 1 %}
+                            {% for row in ktgr %}
+                                <tr>
+                                    <td class="text-center">{{ loop.index }} </td>
+                                    <td class="text-center">{{ row.kategori }}</td>
+                                    <td class="text-center">
+                                        <a href='{{ url_for("kategori_page.editktgr", id_kategori=row.id_kategori) }}'
+                                           class='btn btn-success'><i class="bi bi-pencil"></i> Edit</a>
+{#                                        <a href='{{ url_for("kategori_page.deletektgr", id_kategori=row.id_kategori) }}'#}
+{#                                           class='btn btn-danger'#}
+{#                                           onclick='return confirm("Yakin Kategorinya dihapus??")'><i#}
+{#                                                class="bi bi-trash"></i>#}
+{#                                            Hapus</a>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

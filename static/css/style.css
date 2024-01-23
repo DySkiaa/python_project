@@ -1,0 +1,110 @@
+/* CSS kustom untuk membuat navbar transparan */
+.navbar.transparent {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+a,
+a:link,
+a:visited,
+a:active {
+    color: black;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+a:focus, a:hover,
+a:link:focus,
+a:link:hover,
+a:visited:focus,
+a:visited:hover,
+a:active:focus,
+a:active:hover {
+    color: black;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+#login-form-wrap {
+    background-color: cyan;
+    width: 35%;
+    margin: 200px auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0 0 0;
+    border-radius: 8px;
+    box-shadow: 0px 30px 50px 30px rgba(0, 0, 0, 0.2);
+}
+
+#login-form {
+    padding: 0 40px;
+}
+
+input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 4px;
+}
+
+.validation {
+    display: none;
+    position: absolute;
+    content: " ";
+    height: 60px;
+    width: 30px;
+    right: 15px;
+    top: 0px;
+}
+
+#create-account-wrap {
+    background-color: #eeedf1;
+    color: #8a8b8e;
+    font-size: 14px;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 0 0 8px 8px;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Gaya dasar sidebar */
+.sidebar {
+    height: 100%;
+    width: 250px;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    color: #fff;
+}
+
+/* Gaya dasar menu di dalam sidebar */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+/* Gaya dasar konten halaman utama */
+.content {
+    margin-left: 280px;
+    padding: 20px;
+}
+
+/* Atur lebar kolom pencarian */
+.select2-search__field {
+    height: 30px; /* Ganti nilai sesuai yang Anda inginkan, misalnya 300px */
+}

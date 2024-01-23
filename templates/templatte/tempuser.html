@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Flamboyant Bakery</title>
+    <!-- Site Icons -->
+    <link rel="icon" href="{{ url_for('static', filename='images/flam.png') }}" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap.min.css") }}">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/style1.css") }}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/responsive.css") }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/custom.css") }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/modal.css") }}">
+
+    <!-- Latest compiled and minified CSS -->
+    {#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">#}
+
+    <!-- Latest compiled JavaScript -->
+    {#    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>#}
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
+    <!--[if lt IE 9]>
+{#      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>#}
+{#      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>#}
+    <![endif]-->
+</head>
+<body>
+{#JIKA SUDAH LOGIN SEBAGAI USER MENGGUNAKAN TEMPLATE INI#}
+{% if current_user.is_authenticated %}
+    <!-- Start Main Top -->
+    <div class="main-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="right-phone-box">
+                        <p>Call US : <a href="https://wa.me/6285861158331">+62-858-6115-8331</a></p>
+                    </div>
+                    <div class="our-link">
+                        <ul>
+                            <li><a href="#"><i class="bi bi-geo-alt"></i> Lokasi Kami</a></li>
+                            <li><a href="#"><i class="bi bi-telephone-fill"></i> Kontak kami</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Main Top -->
+
+
+
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ url_for('dashboard.dashboarduser') }}"> <img class="logo"
+                                                                                                  src="{{ url_for('static', filename='images/flamnobg.png') }}"
+                                                                                                  width="160"
+                                                                                                  height="130"/></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu"
+                            aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi bi-list"></i>
+                    </button>
+
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item {% if active_page == 'dashboarduser' %}active{% endif %}"><a
+                                class="nav-link "
+                                href="{{ url_for('dashboard.dashboarduser') }}"><i class="bi bi-house"></i> Beranda</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-building"></i> Tentang
+                            Kami</a></li>
+                        <li class="nav-item {% if active_page == 'productpembeli' %}active{% endif %}"><a
+                                class="nav-link" href="{{ url_for('produk.productpembeli') }}"><i
+                                class="bi bi-basket"></i> Produk</a></li>
+                        <li class="nav-item {% if active_page == 'cart' %}active{% endif %}"><a
+                                class="nav-link" href="{{ url_for('keranjang.cart') }}"> <i
+                                class="bi bi-cart-check"></i> KERANJANG</a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggleq" data-toggle="dropdown"><i
+                                    class="bi bi-person-circle"></i> {{ current_user.username }}</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                       href="{{ url_for('dashboard.detailaccountuser', id=current_user.id) }}">Profile</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                       href="{{ url_for('dashboard.gantipassworduser') }}">Change Password</a></li>
+                                <li><a class="dropdown-item"
+                                       href="{{ url_for('transaksi.riwayatbeli', id=current_user.id) }}">Riwayat
+                                    Pemesanan</a></li>
+                                <hr>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </header>
+
+
+    {# JIKA BELUM LOGIN PAKE TEMPLATE YG BAWAH #}
+{% else %}
+    <div class="main-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="right-phone-box">
+                        <p>Call US : <a href="https://wa.me/6285861158331">+62-858-6115-8331</a></p>
+                    </div>
+                    <div class="our-link">
+                        <ul>
+                            <li><a href="#"><i class="bi bi-geo-alt"></i> </i>Lokasi Kami</a></li>
+                            <li><a href="#"><i class="bi bi-telephone-fill"></i> Kontak Kami</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End Main Top -->
+
+    <!-- Start Main Top -->
+    <header class="main-header">
+
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"> <img class="logo"
+                                                           src="{{ url_for('static', filename='images/flamnobg.png') }}"
+                                                           width="160" height="130"/></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu"
+                            aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi bi-list"></i>
+                    </button>
+
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item {% if active_page == 'home' %}active{% endif %}"><a class="nav-link "
+                                                                                                href="/"><i
+                                class="bi bi-house"></i> Beranda</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-building"></i> Tentang
+                            Kami</a></li>
+                        <li class="nav-item {% if active_page == 'productuser' %}active{% endif %}"><a class="nav-link"
+                                                                                                       href="/produk"><i
+                                class="bi bi-basket"></i> Produk</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register"><i class="bi bi-person-fill-add"></i> Register</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </header>
+    <!-- End Atribute Navigation -->
+    </div>
+
+
+
+{% endif %}
+
+{% block body %}
+
+
+{% endblock %}
+<!-- Start Footer  -->
+<footer>
+    <div class="footer-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>WAKTU BUKA</h3>
+                        <ul class="list-time">
+                            <li>Buka Setiap Hari : 09.00-21.00</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>SOSIAL MEDIA</h3>
+                        <p>Sosial media Flamboyant Bakery.</p>
+                        <ul>
+                            <li><a href="https://www.facebook.com/flamboyantbakery/?locale=id_ID"><i
+                                    class="bi bi-facebook"></i></a></li>
+                            <li><a href="https://linktr.ee/flamboyantbakery"><i class="bi bi-linkedin"></i></a></li>
+                            <li><a href="https://www.instagram.com/flamboyantbakery/"><i
+                                    class="bi bi-instagram"></i></a></li>
+                            <li><a href="https://wa.me/6285861158331"><i class="bi bi-whatsapp"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="footer-widget">
+                        <h4>Tentang Flamboyant Bakery</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. </p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="footer-link-contact">
+                        <h4>Kontak</h4>
+                        <ul>
+                            <li>
+                                <p><i class="bi bi-geo-alt"></i> Jl. Sukawangi No.2, Gegerkalong, Kec. Sukasari,
+                                    Kota Bandung, Jawa Barat 40153</p>
+                            </li>
+                            <li>
+                                <p><i class="bi bi-telephone-fill"></i> Phone: <a href="https://wa.me/6285861158331">+62-858-6115-8331</a>
+                                </p>
+                            </li>
+                            <li>
+                                <p><i class="bi bi-envelope-at-fill"></i> Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer  -->
+</body>
+{% block js %}
+
+{% endblock %}
+<!-- ALL JS FILES -->
+<script src="{{ url_for('static', filename="js/jquery-3.2.1.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/popper.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/bootstrap.min.js") }}"></script>
+<!-- ALL PLUGINS -->
+<script src="{{ url_for('static', filename="js/jquery.superslides.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/bootstrap-select.js") }}"></script>
+<script src="{{ url_for('static', filename="js/inewsticker.js") }}"></script>
+<script src="{{ url_for('static', filename="js/bootsnav.js") }}"></script>
+<script src="{{ url_for('static', filename="js/images-loded.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/isotope.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/owl.carousel.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/baguetteBox.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/form-validator.min.js") }}"></script>
+<script src="{{ url_for('static', filename="js/custom.js") }}"></script>
+<script src="{{ url_for('static', filename="js/contact-form-script.js") }}"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</html>

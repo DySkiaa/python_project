@@ -1,0 +1,128 @@
+{% extends 'templatte/tempuser.html' %}
+{% block body %}
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set index = 1 %}
+                            {% for item in cart %}
+                                <tr>
+                                    <td class="thumbnail-img">
+                                        <a href="#">
+                                            <img class="img-fluid" src="/static/images/{{ item.gambar }}" width="120"
+                                                 alt=""/>
+                                        </a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="#">
+                                            {{ item.nama_product }}
+                                        </a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p>Rp. {{ '{:,.0f}'.format(item.harga * item.quantity) }}</p>
+                                    </td>
+                                    <td> Rp. {%- if item.diskon is not none -%}
+                                        {{ '{:,.0f}'.format( (item.harga * item.diskon / 100) * item.quantity ) }}
+                                    {%- else -%}
+                                        {{ '{:,.0f}'.format(0) }}
+                                    {%- endif -%}</td>
+                                    <td class="quantity-box">
+                                        <input name="quantity" type="number" size="4" value="{{ item.quantity }}"
+                                               min="0" step="1" class="c-input-text qty text"
+                                               data-subtotal="{{ item.subtotal }}">
+                                    </td>
+                                    <td class="total-pr">
+                                        <p class="subtotal">Rp. <span
+                                                class="subtotal-value">{{ '{:,.0f}'.format(item.subtotal) }}</span></p>
+                                    </td>
+
+                                    <td class="remove-pr">
+                                        <form method="POST"
+                                              action="/customer/cart/remove_from_cart/{{ item.id_produk }}">
+                                            <button class="btn b" type="submit">X</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col-lg-8 col-sm-12"></div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="order-box">
+                        <h3>Order summary</h3>
+
+                        <div class="d-flex gr-total">
+                            <h5>Grand Total</h5>
+                            <div class="ml-auto h5 subtotal">Rp. {{ '{:,.0f}'.format(total) }}</div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-12 d-flex shopping-box align-right">
+                    <form method="post" action="{{ url_for('keranjang.checkout') }}">
+                        <button type="submit" class="ml-auto btn hvr-hover text-white">Checkout</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.quantity-box input[name="quantity"]').on('input', function () {
+                var quantityInput = $(this);
+                var subtotalElement = quantityInput.closest('td').next().find('.subtotal-value');
+                var price = parseFloat(quantityInput.data('subtotal'));
+                var newQuantity = parseInt(quantityInput.val(), 10);
+
+                if (isNaN(newQuantity) || newQuantity < 0) {
+                    newQuantity = 0;
+                }
+
+                // Update the displayed quantity
+                quantityInput.val(newQuantity);
+
+                // Update the displayed subtotal
+                var newSubtotal = price * newQuantity;
+                subtotalElement.text('Rp. ' + newSubtotal.toLocaleString('id-ID'));
+                var form = quantityInput.closest('form');
+                form.submit();
+
+                // Optionally, you can update the server using AJAX here
+            });
+        });
+    </script>
+
+
+
+
+{% endblock %}

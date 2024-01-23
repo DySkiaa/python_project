@@ -1,0 +1,261 @@
+{% extends 'templatte/tempuser.html' %}
+{% block body %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Start Slider -->
+    <div id="slides-shop" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-center">
+                <img src="../static/images/appetizer.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang Di <br> Flamboyant Bakery</strong></h1>
+                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends
+                                to see any changes in performance over time.</p>
+                            <p><a class="btn hvr-hover" href="#">Produk Kami</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="../static/images/drink.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang Di <br> Flamboyant Bakery</strong></h1>
+                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends
+                                to see any changes in performance over time.</p>
+                            <p><a class="btn hvr-hover" href="#">Tentang Kami</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="../static/images/salad.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang Di <br> Flamboyant Bakery</strong></h1>
+                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends
+                                to see any changes in performance over time.</p>
+                            <p><a class="btn hvr-hover" href="#">Sosial Media</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"><i class="bi bi-arrow-right"></i></a>
+            <a href="#" class="prev"><i class="bi bi-arrow-left"></i></a>
+        </div>
+    </div>
+    <!-- End Slider -->
+
+    <!-- Start Categories  -->
+    <div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" src="images/categories_img_01.jpg" alt=""/>
+                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" src="images/categories_img_02.jpg" alt=""/>
+                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" src="images/categories_img_03.jpg" alt=""/>
+                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Categories -->
+
+    <div class="box-add-products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="offer-box-products">
+                        <img class="img-fluid" src="images/add-img-01.jpg" alt=""/>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="offer-box-products">
+                        <img class="img-fluid" src="images/add-img-02.jpg" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Produk Kami</h1>
+                        <p><strong>Carilah Sesuai Kategori</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <form method="POST" action="{{ url_for('.dashboarduser') }}">
+                    <div class="col-lg-12">
+                        <div class="special-menu text-center">
+                            <div class="button-group filter-button-group">
+                                <button type="submit" name="id_kategori" value="semua"
+                                        class="kategori-button{% if pilihkategori == 'semua' %} active{% endif %}">
+                                    Semua
+                                </button>
+                                {% for ktgr in kategori %}
+                                    <button type="submit" value="{{ ktgr.kategori }}"
+                                            class="kategori-button{% if pilihkategori == ktgr.kategori %} active{% endif %}"
+                                            name="id_kategori">{{ ktgr.kategori }}</button>
+                                {% endfor %}
+                                <br><br>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row special-list">
+                {% for row in prdk %}
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <p class="sale">Sale</p>
+                                </div>
+                                <img src="../static/images/{{ row.gambar }}" alt="" height="200" width="200">
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for('produk.detailprodukuser', id_produk=row.id_produk) }}"
+                                               data-toggle="tooltip" data-placement="right" title="Detail"><i
+                                                    class="bi bi-info-circle-fill"></i></a></li>
+                                    </ul>
+                                    <a class="cart" href="/productpembeli">-> Keranjang</a>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4>{{ row.nama_product }}</h4>
+                                <h5> Rp. {{ '{:,}'.format(row.harga) }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="special-menu text-center">
+                <div class="button-group filter-button-group">
+                    <button><a class="text-white" href="/productpembeli">Lihat Semua Produk</a></button>
+                </div>
+            </div>
+        </div>
+        {#   MODAL Cart#}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Keranjang anda</h1>
+
+                    </div>
+                    {% if cart %}
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        <div class="row m-1">
+                            <table id="" class='table table-bordered' style=" margin-right: 10px" width="100%">
+                                <thead>
+                                <th class="text-center col-md-1">No</th>
+                                <th class="text-center col-md-1">Gambar</th>
+                                <th class="text-center col-md-2">Nama Produk</th>
+                                <th class="text-center col-md-2">Harga</th>
+                                <th class="text-center col-md-1">Quantity</th>
+                                <th class="text-center col-md-2">Diskon</th>
+                                <th class="text-center col-md-2">Subtotal</th>
+                                <th class="text-center col-md-1">Action</th>
+                                </thead>
+                                <tbody>
+                                {% set index = 1 %}
+                                {% for item in cart %}
+                                    <tr>
+                                        <td class="text-center">{{ loop.index }}</td>
+                                        <td class="text-center"><img src="../static/images/{{ item.gambar }}"
+                                                                     width="80" height="80"></td>
+                                        <td class="text-center">{{ item.nama_product }}</td>
+                                        <td class="text-center">Rp. {{ '{:,.0f}'.format(item.harga) }}</td>
+                                        <td class="text-center">{{ item.quantity }}</td>
+                                        <td class="text-center">
+                                            Rp. {%- if item.diskon is not none -%}
+                                            {{ '{:,.0f}'.format( (item.harga * item.diskon / 100) * item.quantity ) }}
+                                        {%- else -%}
+                                            {{ '{:,.0f}'.format(0) }}
+                                        {%- endif -%}
+                                        </td>
+                                        <td class="text-center">Rp. {{ '{:,.0f}'.format(item.subtotal) }}</td>
+                                        <td>
+                                            <form method="post" action="/remove_from_cart/{{ item.id_produk }}">
+                                                <button class="btn btn-danger" type="submit">Remove</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <th colspan="6">Total Harga</th>
+                                    <th colspan="2">Rp. {{ '{:,.0f}'.format(total) }}</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                tutup
+                            </button>
+                            <form method="post" action="{{ url_for('.checkout') }}">
+                                <button type="submit" class="btn btn-primary">Checkout</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        <h3 class="text-center">Keranjang Masih Kosong</h3>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

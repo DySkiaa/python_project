@@ -1,0 +1,71 @@
+{% extends 'templatte/tempuser.html' %}
+{% block body %}
+    <div class="card m-3">
+        <div class="card-header">
+            <h4 class="card-title text-center mt-3">DETAIL PRODUK</h4>
+        </div>
+        <form method="POST" action="/add_to_cart/{{ produk.id_produk }}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{{ url_for('static', filename='images/' + produk.gambar) }}"
+                             alt="{{ produk.nama_product }}" class="ms-3 mb-1" width="570"
+                             height="600">
+                        <hr>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" value="
+                                    {% if produk.id_promo %}{{ produk.Promo.nama_promo }}{% else %}Tidak Ada Promo {% endif %}"
+                                   readonly
+                                   id="floatingInput">
+                            <label for="floatingInput">Promo</label>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" value="{{ produk.nama_product }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                            <label for="floatingInput">Nama Produk</label>
+                        </div>
+                        <hr>
+                        <div class="form-floating mb-3">
+                            <textarea readonly class="form-control"
+                                      style="height: 200px">{{ produk.deskripsi }}</textarea>
+                            <label for="floatingInput">Deskripsi Produk</label>
+                        </div>
+                        <hr>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" value="Rp. {{ produk.harga }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                            <label for="floatingInput">harga Produk</label>
+                        </div>
+                        <hr>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" value="{{ produk.id_kategori }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                            <label for="floatingInput">Kategori Produk</label>
+                        </div>
+                        <hr>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" value="{{ produk.stok }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                            <label for="floatingInput">Stok Produk</label>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="/login" class="btn btn-primary mr-5">Buy</a>
+                <a href="/productuser" class="btn btn-success">Kembali</a>
+            </div>
+        </form>
+    </div>
+    </div>
+
+
+
+{% endblock %}

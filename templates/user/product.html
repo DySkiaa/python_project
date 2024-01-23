@@ -1,0 +1,134 @@
+{% extends 'templatte/tempuser.html' %}
+{% block body %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{#    <div class="products-box">#}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-all text-center">
+                    <h1>Produk Kami</h1>
+                    <p>Carilah Produk yang anda inginkan, <strong>Filter dengan kategori</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-12">
+                <div class="special-menu text-center">
+                    <div class="button-group filter-button-group">
+                        <button type="button" data-category="semua" class="kategori-button active">
+                            Semua
+                        </button>
+                        {% for ktgr in kategori %}
+                            <button type="button" data-category="{{ ktgr.kategori }}" class="kategori-button">
+                                {{ ktgr.kategori }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row special-list" id="productList">
+            {% for row in prdk %}
+                <form method="POST" action="/customer/produk/add_to_cart/{{ row.id_produk }}"#}
+                      data-category="{{ row.id_kategori }}">
+                    <div class="col-lg-3 col-md-6 special-grid product" data-category="{{ row.id_kategori }}">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                {% if row.promo %}
+                                    <div class="type-lb">
+                                        <p class="sale">Diskon {{ row.promo.diskon }}%</p>
+                                    </div>
+                                {% else %}
+                                {% endif %}
+                                <img name="gambar" src="../static/images/{{ row.gambar }}" alt="" height="200"
+                                     width="265">
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for("produk.detailprodukuser", id_produk=row.id_produk) }}"
+                                               data-toggle="tooltip"
+                                               data-placement="right" title="Detail"><i
+                                                    class="bi bi-info-circle-fill"></i></a>
+                                        </li>
+                                    </ul>
+                                    <button type="submit" class="transparent-button"
+                                            data-id="{{ row.id_produk }}">
+                                        <a class="cart">Keranjang</a>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4>{{ row.nama_product }}</h4>
+                                {% if row.stok is defined and row.stok is not none %}
+                                    {% if row.stok > 0 %}
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <input class="form-control mb-3" type="number" name="quantity"
+                                                       style="height: 30px; width: 70px;"
+                                                       value="1">
+                                            </div>
+                                            <div class="col-8">
+                                                <p>Produk Tersedia : {{ row.stok }}</p>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <p class="text-danger" style="margin-top: 21px">Out of Stock</p>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="text-danger">Stok tidak tersedia</p>
+                                {% endif %}
+                                {% if row.promo %}
+                                    <h5>Rp.
+                                        <strong><s>{{ '{:,}'.format(row.harga) }}</s></strong> {{ '{:,}'.format(row.harga - (row.promo.diskon * row.harga / 100)) }}
+                                    </h5>
+                                {% else %}
+                                    <h5> Rp. {{ '{:,}'.format(row.harga) }}</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- End Gallery  -->
+{% endblock %}
+{% block js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var buttons = document.querySelectorAll('.kategori-button');
+            var products = document.querySelectorAll('.product');
+
+            buttons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var category = this.getAttribute('data-category');
+
+                    // Hapus class 'active' dari semua tombol kategori
+                    buttons.forEach(function (btn) {
+                        btn.classList.remove('active');
+                    });
+
+                    // Tambahkan class 'active' ke tombol kategori yang diklik
+                    this.classList.add('active');
+
+                    // Tampilkan atau sembunyikan produk berdasarkan kategori
+                    products.forEach(function (product) {
+                        var productCategory = product.getAttribute('data-category');
+                        if (category === 'semua' || category === productCategory) {
+                            product.style.display = 'block';
+                        } else {
+                            product.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

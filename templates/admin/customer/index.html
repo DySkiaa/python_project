@@ -1,0 +1,78 @@
+{% extends 'templatte/templateadmin.html' %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="{{ url_for('dashboard_page.dashboard') }}">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table id="daTable" class="table table-borderless table-data3">
+                            <thead>
+                            <tr>
+                                <th class="text-center col-md-1">No</th>
+                                <th class="text-center col-md-4">Nama Customer</th>
+                                <th class="text-center col-md-2">Alamat</th>
+                                <th class="text-center col-md-2">Usia</th>
+                                <th class="text-center col-md-2">Nomor Telepon</th>
+                                <th class="text-center col-md-1">Aksi</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set index = 1 %}
+                            {% for cuus in user %}
+                                <tr>
+                                    <td class="text-center">{{ loop.index }}</td>
+                                    <td class="text-center">{{ cuus.fullname }}</td>
+                                    <td class="text-center">{{ cuus.alamat }}</td>
+                                    <td class="text-center">{{ cuus.usia }} Tahun</td>
+                                    <td class="text-center">{{ cuus.notelp }} </td>
+                                    <td class="text-center"><a
+                                            href="{{ url_for('customer_page.riwayat', user_id=cuus.id) }}"
+                                            class="btn btn-primary">Riwayat Transaksi</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

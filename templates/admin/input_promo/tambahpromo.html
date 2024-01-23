@@ -1,0 +1,92 @@
+{% extends 'templatte/templateadmin.html' %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="{{ url_for('.tambahpromo') }}">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <div class="section__content section__content--p30 mt-3">
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center">HALAMAN PILIH PROMO</h4>
+
+                <form action='' method="POST">
+                    <div class="form-group mb-3">
+                        <label for="floatingInput" class="mr-1 mt-2">Nama Promo : </label>
+                        <select class="custom-select form-control select2-search__field" name="id_promo" required
+                                id="promoselect" aria-label="Example select with button addon">
+                            {% for prom in promo %}
+                                <option value="{{ prom.id_promo }}"
+                                        data-promo-name="{{ prom.diskon }}">{{ prom.nama_promo }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <div id="promo-name-display">Diskon Harga : <strong><span id="promo-name"></span>%</strong></div>
+                    <div class="row mt-3">
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-1">
+                            <a href="{{ url_for('.tambahpromo') }}" class="btn btn-success">Kembali</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block js %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectElement = document.getElementById("promoselect");
+            var promoNameElement = document.getElementById("promo-name");
+
+            // Mendapatkan opsi yang terpilih saat halaman dimuat
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var promoName = selectedOption.getAttribute("data-promo-name");
+
+            // Menampilkan nilai diskon awal dalam elemen
+            promoNameElement.textContent = promoName;
+
+            // Menambahkan event listener untuk mengupdate ketika elemen select berubah
+            selectElement.addEventListener("change", function () {
+                var selectedOption = this.options[this.selectedIndex];
+                var promoName = selectedOption.getAttribute("data-promo-name");
+                promoNameElement.textContent = promoName;
+            });
+        });
+    </script>
+
+{% endblock %}

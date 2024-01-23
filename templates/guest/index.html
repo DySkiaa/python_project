@@ -1,0 +1,203 @@
+{% extends 'templatte/tempuser.html' %}
+{% block body %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="text-center mt-3 alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Start Slider -->
+    <div id="slides-shop" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-center">
+                <img src="../static/images/appetizer.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang Di <br> Flamboyant Bakery</strong></h1>
+                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends
+                                to see any changes in performance over time.</p>
+                            <p><a class="btn hvr-hover" href="/productuser">Produk Kami</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="../static/images/drink.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang Di <br> Flamboyant Bakery</strong></h1>
+                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends
+                                to see any changes in performance over time.</p>
+                            <p><a class="btn hvr-hover" href="#">Tentang Kami</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="../static/images/salad.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang Di <br> Flamboyant Bakery</strong></h1>
+                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends
+                                to see any changes in performance over time.</p>
+                            <p><a class="btn hvr-hover" href="#">Sosial Media</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"><i class="bi bi-arrow-right"></i></a>
+            <a href="#" class="prev"><i class="bi bi-arrow-left"></i></a>
+        </div>
+    </div>
+    <!-- End Slider -->
+
+    <!-- Start Categories  -->
+    <div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" src="images/categories_img_01.jpg" alt=""/>
+                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" src="images/categories_img_02.jpg" alt=""/>
+                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" src="images/categories_img_03.jpg" alt=""/>
+                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Categories -->
+
+    <div class="box-add-products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="offer-box-products">
+                        <img class="img-fluid" src="images/add-img-01.jpg" alt=""/>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="offer-box-products">
+                        <img class="img-fluid" src="images/add-img-02.jpg" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Produk Kami</h1>
+                        <p><strong>Carilah Sesuai Kategori</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <button type="button" data-category="semua" class="kategori-button active">
+                                Semua
+                            </button>
+                            {% for ktgr in kategori %}
+                                <button type="button" data-category="{{ ktgr.kategori }}" class="kategori-button">
+                                    {{ ktgr.kategori }}
+                                </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row special-list" id="productList">
+                {% for row in prdk %}
+                    <div class="col-lg-3 col-md-6 special-grid best-seller product"
+                         data-category="{{ row.id_kategori }}">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <p class="sale">Sale</p>
+                                </div>
+                                <img src="../static/images/{{ row.gambar }}" alt="" height="200" width="200">
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for('g_prod.detailproduknotlogin', id_produk=row.id_produk) }}"
+                                               data-toggle="tooltip" data-placement="right" title="Detail"><i
+                                                    class="bi bi-info-circle-fill"></i></a></li>
+                                    </ul>
+                                    <button type="button" class="transparent-button"
+                                            data-id="{{ row.id_produk }}">
+                                        <a href="/login" class="cart">Keranjang</a>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4>{{ row.nama_product }}</h4>
+                                <h5> Rp. {{ '{:,}'.format(row.harga) }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="special-menu text-center">
+                <div class="button-group filter-button-group">
+                    <button><a class="text-white" href="/productuser">Lihat Semua Produk</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var buttons = document.querySelectorAll('.kategori-button');
+            var products = document.querySelectorAll('.product');
+
+            buttons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var category = this.getAttribute('data-category');
+
+                    // Hapus class 'active' dari semua tombol kategori
+                    buttons.forEach(function (btn) {
+                        btn.classList.remove('active');
+                    });
+
+                    // Tambahkan class 'active' ke tombol kategori yang diklik
+                    this.classList.add('active');
+
+                    // Tampilkan atau sembunyikan produk berdasarkan kategori
+                    products.forEach(function (product) {
+                        var productCategory = product.getAttribute('data-category');
+                        if (category === 'semua' || category === productCategory) {
+                            product.style.display = 'block';
+                        } else {
+                            product.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

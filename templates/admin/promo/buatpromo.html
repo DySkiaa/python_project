@@ -1,0 +1,75 @@
+{% extends 'templatte/templateadmin.html' %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="{{ url_for('.promo') }}">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <div class="section__content section__content--p30 mt-3">
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center">HALAMAN BUAT PROMO</h4>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action='{{ url_for('.buatpromo') }}' method="POST">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="nama_promo" id="floatingInput"
+                               placeholder="Nama Promo">
+                        <label for="floatingInput">Nama Promo</label>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" name="diskon"
+                                   id="floatingInput"
+                                   placeholder="Diskon">
+                        </div>
+                        <span class="input-group-text">%</span>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-1">
+                            <a href="{{ url_for('.promo') }}" class="btn btn-success">Kembali</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

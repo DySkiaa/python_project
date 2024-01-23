@@ -1,0 +1,110 @@
+{% include 'templatte/templateadmin.html' %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="{{ url_for('produk_page.product') }}">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <div class="section__content section__content--p30 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <strong>Detail</strong>
+                <small> Produk</small>
+            </div>
+            <div class="card-body card-block">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="floatingInput">Id Produk</label>
+
+                            <input type="text" class="form-control" value="{{ produk.id_produk }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="floatingInput">Nama Produk</label>
+
+                            <input type="text" class="form-control" value="{{ produk.nama_product }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="floatingInput">Deskripsi Produk</label>
+
+                            <textarea readonly class="form-control"
+                                      style="height: 300px">{{ produk.deskripsi }}</textarea>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="floatingInput">harga Produk</label>
+
+                            <input type="number" class="form-control" value="{{ produk.harga }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="floatingInput">Kategori Produk</label>
+
+                            <input type="text" class="form-control" value="{{ produk.id_kategori }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="floatingInput">Gambar Produk</label><br>
+
+                            <p class="text-center"><img
+                                    src="{{ url_for('static', filename='images/' + produk.gambar) }}"
+                                    alt="{{ produk.nama_product }}" class="ms-3 mb-1" width="370"
+                            >
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="floatingInput">Stok Produk</label>
+
+                            <input type="number" class="form-control" value="{{ produk.stok }}" readonly
+                                   id="floatingInput"
+                                   placeholder="name@example.com">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" href="/produk_page" role="button">Kembali</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

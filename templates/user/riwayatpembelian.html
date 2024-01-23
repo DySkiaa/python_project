@@ -1,0 +1,47 @@
+{% extends 'templatte/tempuser.html' %}
+{% block body %}
+    {% if not riwayatpembelian %}
+        <p>Anda Belum Pernah melakukan pembelian.</p>
+        <a href="/dashboarduser" class="btn btn-primary">Kembali</a>
+    {% else %}
+        <div class="card m-5">
+            <div class="card-header">
+                <h4 class="card-title text-center">PESANAN ANDA</h4>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <table id="daTable" class='table table-bordered ' style=" margin-right: 10px"
+                           width="100%">
+                        <thead>
+                        <th class="text-center col-md-1">No</th>
+                        <th class="text-center col-md-1">ID Transaksi</th>
+                        <th class="text-center col-md-3">Total</th>
+                        <th class="text-center col-md-2">Tanggal Pesan</th>
+                        <th class="text-center col-md-2">Aksi</th>
+                        </thead>
+                        {% set index = 1 %}
+                        {% for trs in riwayatpembelian %}
+                            <tbody>
+                            <tr>
+                                <td class="text-center">{{ loop.index }}</td>
+                                <td class="text-center">{{ trs.id_transaksi }}</td>
+                                <td class="text-center">Rp. {{ '{:,.0f}'.format(trs.total) }} </td>
+                                <td class="text-center">{{ trs.date.strftime('%Y-%m-%d %H:%M') }} </td>
+                                <td class="text-center"><a href="/detail_pembelian/{{ trs.id_transaksi }}"
+                                                           class="btn btn-primary">Detail</a>
+                                    <a href="#" class="btn btn-danger">PDF</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('dashboard.dashboarduser') }}" class="btn btn-primary">Kembali</a>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

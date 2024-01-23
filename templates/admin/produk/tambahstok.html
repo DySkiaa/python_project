@@ -1,0 +1,72 @@
+{% include 'templatte/templateadmin.html' %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="{{ url_for('produk_page.product') }}">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="section__content section__content--p30 mt-3">
+        <div class="card">
+            <form action='' method="POST">
+                <div class="card-header">
+                    <strong>Tambah Stok</strong>
+                    <small> Produk</small>
+                </div>
+                <div class="card-body card-block">
+                    <div class="form-group">
+                        <label for="floatingInput">Stok Produk</label>
+                        <input type="number" class="form-control" name="stok" id="floatingInput"
+                               placeholder="Stok Produk" value="{{ produk.stok }}">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row ">
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-primary" href="/produk_page" role="button">Kembali</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+{% endblock %}

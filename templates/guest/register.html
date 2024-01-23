@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Flamboyant Bakery</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/flam.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/login.css") }}">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="register-page">
+    <div class="form-regis">
+        <a href="/"><img src="{{ url_for('static', filename='images/flamboyantbakery.png') }}" height="100" width="100"></a>
+        <hr>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h3>REGISTER</h3>
+        <form class="register-form" action="" method="POST">
+            <input type="email" name="email" placeholder="Email" required/>
+            <input type="text" name="username" placeholder="Username" required/>
+            <input type="password" name="password" placeholder="Password" required/>
+            <input type="text" name="fullname" placeholder="Fullname" required/>
+            <input type="number" name="usia" placeholder="Umur" required/>
+            <input type="text" name="alamat" placeholder="Alamat"/>
+            <input type="text" name="role_id" value="2" placeholder="" hidden/>
+            <input type="number" name="notelp" placeholder="Nomor Telepon" required/>
+            <button type="submit">create</button>
+            <p class="message">Sudah punya akun? <a href="/login">Kembali Login</a></p>
+        </form>
+    </div>
+</div>
+</body>
+{#<link rel="stylesheet" href="{{ url_for('static', filename="js/login.js") }}">#}
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</html>

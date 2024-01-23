@@ -1,0 +1,97 @@
+{% extends 'templatte/templateadmin.html' %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="/dashboard">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <!-- DATA TABLE-->
+                    <div class="table-responsive m-b-40">
+                        <table id="daTable" class="table table-borderless table-data3">
+                            <thead>
+                            <tr>
+                                <th class="text-center col-1">No</th>
+                                <th class="text-center col-2">Nama Produk</th>
+                                <th class="text-center col-2">Harga</th>
+                                <th class="text-center col-2">Nama Promo</th>
+                                <th class="text-center col-2">Bonus/Potongan harga</th>
+                                <th class="text-center col-3">Action</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set index = 1 %}
+                            {% for row in produk %}
+                                <tr>
+                                    <td class="text-center">{{ loop.index }}</td>
+                                    <td class="text-center">{{ row.nama_product }}</td>
+                                    <td class="text-center">RP. {{ '{:,}'.format(row.harga) }}</td>
+                                    <td class="text-center">
+                                        {% if row.promo %}{{ row.promo.nama_promo }}{% else %}None {% endif %}</td>
+                                    <td class="text-center">{% if row.promo %} RP.
+                                        {{ '{:,}'.format((row.promo.diskon * row.harga)/100) }}{% else %}
+                                        None{% endif %}</td>
+                                    <td class="text-center align-center">
+                                        {% if not row.promo %}
+                                            <a href='{{ url_for("input_promo_page.tambahpromoproduk", id_produk=row.id_produk) }}'
+                                               class='btn btn-primary'><i class="bi bi-info-circle"></i>Masukan
+                                                Promo</a>
+                                        {% else %}
+                                            <a href='{{ url_for("input_promo_page.cabutpromo", id_produk=row.id_produk) }}'
+                                               class='btn btn-success'><i class="bi bi-pencil"></i>Cabut Promo</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
