@@ -13,7 +13,7 @@
                                     {% for item in breadcrumb_data %}
                                         <li class="list-inline-item {% if loop.last %}active{% endif %}">
                                             {% if not loop.last %}
-                                                <a href="{{ url_for('.tambahpromo') }}">{{ item }}</a>
+                                                <a href="/admin/input_promo">{{ item }}</a>
                                             {% else %}
                                                 {{ item }}
                                             {% endif %}

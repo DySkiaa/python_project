@@ -1,0 +1,109 @@
+{% extends 'templatte/templateadmin.html' %}
+{% block css %}
+  .img-box {
+        width: 480px; /* Ukuran kotak gambar */
+        height: 480px; /* Ukuran kotak gambar */
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .img-box img {
+        max-width: 100%;
+        max
+{% endblock %}
+{% block body %}
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb m-t-75">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    {% for item in breadcrumb_data %}
+                                        <li class="list-inline-item {% if loop.last %}active{% endif %}">
+                                            {% if not loop.last %}
+                                                <a href="/admin/transaksi">{{ item }}</a>
+                                            {% else %}
+                                                {{ item }}
+                                            {% endif %}
+                                        </li>
+                                        {% if not loop.last %}
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-center">Cek Bukti  </h4>
+            <div class="row">
+                <div class="col-6">
+                    <table>
+                        <tr>
+                            <td> Id Transaksi</td>
+                            <td> :</td>
+                            <td> {{ transaksi.id_transaksi }} </td>
+                        </tr>
+                        <tr>
+                            <td> Nama Pemesan</td>
+                            <td> :</td>
+                            <td> {{ transaksi.user.fullname }} </td>
+                        </tr>
+                        <tr>
+                            <td> Alamat</td>
+                            <td> :</td>
+                            <td> {{ transaksi.user.alamat }} </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table>
+                        <tr>
+                            <td> Nomor Telepon</td>
+                            <td> :</td>
+                            <td> {{ transaksi.user.notelp }} </td>
+                        </tr>
+                        <tr>
+                            <td> Tanggal Pesan</td>
+                            <td> :</td>
+                            <td> {{ transaksi.date.strftime('%Y-%m-%d') }} </td>
+                        </tr>
+                        <tr>
+                            <td> Jam Pesan</td>
+                            <td> :</td>
+                            <td> {{ transaksi.date.strftime('%H:%M') }} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+              <div class="d-flex justify-content-center mt-4">
+            <div class="img-box">
+                <img src="/static/images/{{ transaksi.picture }}" class="img-fluid" alt="Uploaded Picture">
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <form action="{{ url_for('transaksi_page.update_status', id_transaksi=transaksi.id_transaksi) }}" method="post">
+            <button type="submit" name="status" value="3" class="btn btn-success mx-2">Terima Cek Bukti</button>
+            <button type="submit" name="status" value="4" class="btn btn-danger mx-2">Tolak Cek Bukti</button>
+            <a href="/admin/transaksi" class="btn btn-primary mx-2">Kembali</a>
+        </form>
+    </div>
+{% endblock %}

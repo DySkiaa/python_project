@@ -42,7 +42,11 @@
           rel="stylesheet" media="all">
     <link href="{{ url_for('static', filename="admin/vendor/vector-map/jqvmap.min.css") }}" rel="stylesheet"
           media="all">
+    <style>
+        {% block css %}
 
+        {% endblock %}
+    </style>
     <!-- Main CSS-->
     <link href="{{ url_for('static', filename="admin/css/theme.css") }}" rel="stylesheet" media="all">
 
@@ -133,13 +137,14 @@
                                             class="bi bi-person"></i> Profile</a>
                                 </div>
                                 <div class="account-dropdown__item">
-                                    <a class="dropdown-item" href="{{ url_for('dashboard_page.gantipassword') }}"><i
+                                    <a class="dropdown-item"
+                                       href="{{ url_for('dashboard_page.gantipassword', id=current_user.id) }}"><i
                                             class="bi bi-shield-lock"></i> Change Password</a>
 
                                 </div>
                                 <div class="account-dropdown__item">
                                     <a class="dropdown-item"
-                                       href="{{ url_for('dashboard_page.addadmin') }}"><i
+                                       href="/admin/dashboard/addadmin"><i
                                             class="bi bi-person-add"></i> Buat
                                         Akun Admin</a>
                                 </div>
@@ -212,7 +217,7 @@
 
     {% endblock %}
 
-
+</div>
 </body>
 
 <!-- Jquery JS-->
@@ -235,10 +240,6 @@
 <script src="{{ url_for('static', filename="admin/vendor/chartjs/Chart.bundle.min.js") }}"></script>
 <script src="{{ url_for('static', filename="admin/vendor/select2/select2.min.js") }}">
 </script>
-<script src="{{ url_for('static', filename="admin/vendor/vector-map/jquery.vmap.js") }}"></script>
-<script src="{{ url_for('static', filename="admin/vendor/vector-map/jquery.vmap.min.js") }}"></script>
-<script src="{{ url_for('static', filename="admin/vendor/vector-map/jquery.vmap.sampledata.js") }}"></script>
-<script src="{{ url_for('static', filename="admin/vendor/vector-map/jquery.vmap.world.js") }}"></script>
 
 <!-- Main JS-->
 <script src="{{ url_for('static', filename="admin/js/main.js") }}"></script>
@@ -258,8 +259,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-
-{#<script src="https://code.jquery.com/jquery-3.5.1.js"></script>#}
 
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>

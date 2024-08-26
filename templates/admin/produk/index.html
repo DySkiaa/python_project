@@ -13,7 +13,7 @@
                                     {% for item in breadcrumb_data %}
                                         <li class="list-inline-item {% if loop.last %}active{% endif %}">
                                             {% if not loop.last %}
-                                                <a href="{{ url_for('dashboard_page.dashboard') }}">{{ item }}</a>
+                                                <a href="/admin/dashboard">{{ item }}</a>
                                             {% else %}
                                                 {{ item }}
                                             {% endif %}
@@ -38,13 +38,6 @@
         <div class="container-fluid mt-4">
             <div class="row m-t-30">
                 <div class="col-md-12">
-                    {#                    {% with messages = get_flashed_messages(with_categories=true) %}#}
-                    {#                        {% if messages %}#}
-                    {#                            {% for category, message in messages %}#}
-                    {#                                <div class="alert alert-{{ category }} ">{{ message }}</div>#}
-                    {#                            {% endfor %}#}
-                    {#                        {% endif %}#}
-                    {#                    {% endwith %}#}
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             <div id="flash-messages">

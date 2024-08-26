@@ -1,8 +1,33 @@
 {% extends 'templatte/tempuser.html' %}
+{% block css %}
+    .status-box {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #fff; /* Text color for better readability */
+    display: inline-block;
+    }
+
+    .status-ditolak {
+    background-color: red;
+    }
+
+    .status-belum-mengirim {
+    background-color: orange;
+    }
+
+    .status-tunggu-verifikasi {
+    background-color: yellow;
+    color: #000; /* Text color for better readability on yellow background */
+    }
+
+    .status-pesanan-siap {
+    background-color: green;
+    }
+{% endblock %}
 {% block body %}
     {% if not riwayatpembelian %}
         <p>Anda Belum Pernah melakukan pembelian.</p>
-        <a href="/dashboarduser" class="btn btn-primary">Kembali</a>
+        <a href="/customer/dashboard" class="btn btn-primary">Kembali</a>
     {% else %}
         <div class="card m-5">
             <div class="card-header">
@@ -18,6 +43,7 @@
                         <th class="text-center col-md-1">ID Transaksi</th>
                         <th class="text-center col-md-3">Total</th>
                         <th class="text-center col-md-2">Tanggal Pesan</th>
+                        <th class="text-center col-md-2">Status</th>
                         <th class="text-center col-md-2">Aksi</th>
                         </thead>
                         {% set index = 1 %}
@@ -28,18 +54,84 @@
                                 <td class="text-center">{{ trs.id_transaksi }}</td>
                                 <td class="text-center">Rp. {{ '{:,.0f}'.format(trs.total) }} </td>
                                 <td class="text-center">{{ trs.date.strftime('%Y-%m-%d %H:%M') }} </td>
-                                <td class="text-center"><a href="/detail_pembelian/{{ trs.id_transaksi }}"
-                                                           class="btn btn-primary">Detail</a>
-                                    <a href="#" class="btn btn-danger">PDF</a>
+                                <td class="text-center">
+                                    <div class="status-box
+                                            {% if trs.stat_pem.stats_pem_name == 'Belum Mengirim Bukti' %}status-belum-mengirim
+                                            {% elif trs.stat_pem.stats_pem_name == 'Tunggu Verifikasi' %}status-tunggu-verifikasi
+                                            {% elif trs.stat_pem.stats_pem_name == 'Pesanan Siap Diantar' %}status-pesanan-siap
+                                            {% elif trs.stat_pem.stats_pem_name == 'Bukti Ditolak' %}status-ditolak
+                                            {% endif %}">
+                                        {{ trs.stat_pem.stats_pem_name }}
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    {% if trs.picture %}
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#viewPictureModal-{{ trs.id_transaksi }}">
+                                            Lihat Bukti
+                                        </button>
+                                    {% else %}
+                                        <button type="button" class="btn btn-success" data-toggle="modal"
+                                                data-target="#uploadModal-{{ trs.id_transaksi }}">
+                                            Upload Picture
+                                        </button>
+                                    {% endif %}
+                                    <a href="/customer/detail_pembelian/{{ trs.id_transaksi }}"
+                                       class="btn btn-primary">Detail</a>
+{#                                    <a href="#" class="btn btn-danger">PDF</a>#}
                                 </td>
                             </tr>
+
+                            {#modal view picture#}
+                            <div class="modal fade" id="viewPictureModal-{{ trs.id_transaksi }}" tabindex="-1"
+                                 role="dialog" aria-labelledby="viewPictureModalLabel-{{ trs.id_transaksi }}"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <img src="/static/images/{{ trs.picture }}" class="img-fluid"
+                                                 alt="Uploaded Picture">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {#modal upload picture#}
+                            <div class="modal fade" id="uploadModal-{{ trs.id_transaksi }}" tabindex="-1" role="dialog"
+                                 aria-labelledby="uploadModalLabel-{{ trs.id_transaksi }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="POST"
+                                                  action="{{ url_for('transaksi.upload_bukti', id_transaksi=trs.id_transaksi) }}"
+                                                  enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <label for="picture-{{ trs.id_transaksi }}">Choose Picture</label>
+                                                    <input type="file" class="form-control"
+                                                           id="picture-{{ trs.id_transaksi }}" name="picture">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Upload</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{{ url_for('dashboard.dashboarduser') }}" class="btn btn-primary">Kembali</a>
+                <a href="/customer/dashboard" class="btn btn-primary">Kembali</a>
             </div>
         </div>
     {% endif %}

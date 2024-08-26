@@ -8,8 +8,9 @@
                 <table id="daTable" class='table table-bordered' style=" margin-right: 10px" width="100%">
                     <thead>
                     <th class="text-center col-md-1">No</th>
-                    <th class="text-center col-md-4">id Transaksi</th>
+                    <th class="text-center col-md-1">Gambar Produk</th>
                     <th class="text-center col-md-2">Nama Produk</th>
+                    <th class="text-center col-md-2">Nama Harga</th>
                     <th class="text-center col-md-3">Quantity</th>
                     <th class="text-center col-md-3">Subtotal</th>
                     </thead>
@@ -19,14 +20,16 @@
                         <tbody>
                         <tr>
                             <td class="text-center">{{ loop.index }}</td>
-                            <td class="text-center">{{ dtr.id_transaksi }}</td>
-                            <td class="text-center">{{ dtr.Product.nama_product }}</td>
+                            <td class="text-center"><img src="/static/images/{{ dtr.produk.gambar }}" height="70"
+                                                         width="70"></td>
+                            <td class="text-center">{{ dtr.produk.nama_product }}</td>
+                            <td class="text-center">Rp. {{ '{:,.0f}'.format(dtr.produk.harga) }}</td>
                             <td class="text-center">{{ dtr.quantity }} </td>
                             <td class="text-center">Rp. {{ '{:,.0f}'.format(dtr.subtotal) }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
-                        <th colspan="4">Total Harga</th>
+                        <th colspan="5">Total Harga</th>
                         <th colspan="3" class="text-center">Rp. {{ '{:,.0f}'.format(transaksi.total) }}</th>
                     </tr>
                     </tbody>
@@ -34,7 +37,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <a href="/riwayat_pembelian/{{ transaksi.user.id }}" class="btn btn-primary">Kembali</a>
+            <a href="/customer/riwayat_pembelian/{{ transaksi.user.id }}" class="btn btn-primary">Kembali</a>
         </div>
     </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% include 'templatte/templateadmin.html' %}
+{% extends 'templatte/templateadmin.html' %}
 {% block body %}
     <!-- BREADCRUMB-->
     <section class="au-breadcrumb m-t-75">
@@ -13,7 +13,7 @@
                                     {% for item in breadcrumb_data %}
                                         <li class="list-inline-item {% if loop.last %}active{% endif %}">
                                             {% if not loop.last %}
-                                                <a href="{{ url_for('produk_page.product') }}">{{ item }}</a>
+                                                <a href="/admin/produk">{{ item }}</a>
                                             {% else %}
                                                 {{ item }}
                                             {% endif %}
@@ -60,7 +60,7 @@
                             <button type="submit" class="btn btn-success">Submit</button>
                         </div>
                         <div class="col-1">
-                            <a class="btn btn-primary" href="/produk_page" role="button">Kembali</a>
+                            <a class="btn btn-primary" href="/admin/produk" role="button">Kembali</a>
                         </div>
                     </div>
                 </div>

@@ -1,172 +1,58 @@
 {% extends 'templatte/tempuser.html' %}
 {% block body %}
-    {#    <div class="card ">#}
-    {#        <div class="card-header">#}
-    {#            <h4 class="card-title text-center">DETAIL PRODUK</h4>#}
-    {#        </div>#}
-    {#        <form method="POST" action="/add_to_cart/{{ produk.id_produk }}">#}
-    {#            <div class="card-body">#}
-    {#                <div class="row">#}
-    {#                    <div class="col-4">#}
-    {#                        <img src="{{ url_for('static', filename='images/' + produk.gambar) }}"#}
-    {#                             alt="{{ produk.nama_product }}" class="ms-3 mb-1" width="570"#}
-    {#                             height="600">#}
-    {#                        <hr>#}
-    {#                        <div class="form-floating mb-3">#}
-    {#                            <input type="text" class="form-control" value="#}
-    {##}
-    {#                                    {% if produk.id_promo %}{{ produk.Promo.nama_promo }}{% else %}Tidak Ada Promo {% endif %}"#}
-    {#                                   readonly#}
-    {#                                   id="floatingInput">#}
-    {#                            <label for="floatingInput">Promo</label>#}
-    {#                        </div>#}
-    {#                        <hr>#}
-    {#                        <div class="form-floating mb-3">#}
-    {#                            <input type="text" class="form-control" value="#}
-    {##}
-    {#                                    {% if produk.id_promo %}{{ produk.Promo.diskon }}%{% else %}Tidak Ada Promo {% endif %}"#}
-    {#                                   readonly id="floatingInput">#}
-    {#                            <label for="floatingInput">Diskon</label>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {##}
-    {#                    <div class="col-8">#}
-    {#                        <div class="form-floating mb-3">#}
-    {#                            <input type="text" class="form-control" value="{{ produk.nama_product }}" readonly#}
-    {#                                   id="floatingInput"#}
-    {#                                   placeholder="name@example.com">#}
-    {#                            <label for="floatingInput">Nama Produk</label>#}
-    {#                        </div>#}
-    {#                        <hr>#}
-    {#                        <div class="form-floating mb-3">#}
-    {#                            <textarea readonly class="form-control"#}
-    {#                                      style="height: 200px">{{ produk.deskripsi }}</textarea>#}
-    {#                            <label for="floatingInput">Deskripsi Produk</label>#}
-    {#                        </div>#}
-    {#                        <hr>#}
-    {#                        {% if produk.id_promo %}#}
-    {#                            <div class="row">#}
-    {#                                <div class="col-6">#}
-    {#                                    <div class="form-floating mb-3">#}
-    {#                                        <input type="number" class="form-control"#}
-    {#                                               value="{{ produk.harga }}"#}
-    {#                                               readonly#}
-    {#                                               id="floatingInput"#}
-    {#                                               placeholder="<strong><s>{{ '{:,}'.format(produk.harga) }}</s></strong> {{ '{:,}'.format(produk.harga - (produk.Promo.diskon * produk.harga / 100)) }}">#}
-    {#                                        <label for="floatingInput">Harga Awal</label>#}
-    {#                                    </div>#}
-    {#                                </div>#}
-    {#                                <div class="col-6">#}
-    {#                                    <div class="form-floating mb-3">#}
-    {#                                        <input type="number" class="form-control"#}
-    {#                                               value="{{ produk.harga - (produk.Promo.diskon * produk.harga / 100) }}"#}
-    {#                                               readonly#}
-    {#                                               id="floatingInput"#}
-    {#                                               placeholder="<strong><s>{{ '{:,}'.format(produk.harga) }}</s></strong> {{ '{:,}'.format(produk.harga - (produk.Promo.diskon * produk.harga / 100)) }}">#}
-    {#                                        <label for="floatingInput">Harga Promo</label>#}
-    {#                                    </div>#}
-    {#                                </div>#}
-    {#                            </div>#}
-    {##}
-    {#                        {% else %}#}
-    {#                            <div class="form-floating mb-3">#}
-    {#                                <input type="number" class="form-control" value="{{ produk.harga }}" readonly#}
-    {#                                       id="floatingInput"#}
-    {#                                       placeholder="">#}
-    {#                                <label for="floatingInput">harga Produk</label>#}
-    {#                            </div>#}
-    {#                        {% endif %}#}
-    {#                        <hr>#}
-    {#                        <div class="form-floating mb-3">#}
-    {#                            <input type="text" class="form-control" value="{{ produk.id_kategori }}" readonly#}
-    {#                                   id="floatingInput"#}
-    {#                                   placeholder="name@example.com">#}
-    {#                            <label for="floatingInput">Kategori Produk</label>#}
-    {#                        </div>#}
-    {#                        <hr>#}
-    {##}
-    {#                        <hr>#}
-    {#                        <div class="form-floating mb-3">#}
-    {#                            <input type="number" class="form-control" value="{{ produk.stok }}" readonly#}
-    {#                                   id="floatingInput"#}
-    {#                                   placeholder="name@example.com">#}
-    {#                            <label for="floatingInput">Stok Produk</label>#}
-    {#                        </div>#}
-    {#                        <hr>#}
-    {#                        <div class="row">#}
-    {#                            <div style="margin-top: 20px" class="col-3">#}
-    {#                                <p>Masukan Jumlah yang ingin dibeli : </p>#}
-    {#                            </div>#}
-    {#                            <div style="margin-top: 10px" class="col-9">#}
-    {#                                <input id="floatingInput" class="form-control mb-3" type="number" name="quantity"#}
-    {#                                       style="height: 50px; width: 100px;"#}
-    {#                                       value="1">#}
-    {#                            </div>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {##}
-    {##}
-    {#            <div class="card-footer">#}
-    {#                {% if produk.stok > 0 %}#}
-    {#                    <button type="submit" class="btn btn-primary mr-5">Buy</button>#}
-    {#                {% else %}#}
-    {#                    <button type="button" class="btn btn-primary mr-5" disabled>Stok Habis</button>#}
-    {#                {% endif %}#}
-    {#                <a href="/productpembeli" class="btn btn-success">Kembali</a>#}
-    {#            </div>#}
-    {#        </form>#}
-    {#    </div>#}
-
     <div class="shop-detail-box-main">
         <div class="container">
-        <form method="POST" action="/customer/produk/add_to_cart/{{ produk.id_produk }}">
-            <div class="row">
-                <div class="col-xl-5 col-lg-5 col-md-6">
-                    <div class="single-product-slider">
-                        <div class="" role="listbox">
-                            <img class="d-block w-100" src="{{ url_for('static', filename='images/' + produk.gambar) }}"
-                                 alt="First slide">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-7 col-lg-7 col-md-6">
-                    <div class="single-product-details">
-                        <h2>{{ produk.nama_product }}</h2>
-                        <h5>
-                            {% if produk.id_promo %}
-                                <del>Rp. {{ '{:,}'.format(produk.harga) }}</del>
-                                Rp. {{ '{:,}'.format(produk.harga - (produk.promo.diskon * produk.harga / 100)) }}
-                            {% else %}
-                                Rp. {{ '{:,}'.format(produk.harga) }}
-                            {% endif %}
-                        </h5>
-                        <p class="available-stock"><span> {{ produk.stok }} available / <a href="#">{{ produk.selling }} Terjual </a></span>
-                        <p>
-                        <h4>Description:</h4>
-                        <p>{{ produk.deskripsi }}</p>
-                        <ul>
-                            <li>
-                                <div class="form-group quantity-box">
-                                    <label class="control-label">Quantity</label>
-                                    <input class="form-control" name="quantity" value="0" min="0" max="20" type="number">
-                                </div>
-                            </li>
-                        </ul>
-
-                        <div class="price-box-bar">
-                            <div class="cart-and-bay-btn">
-
-                                <button type="submit" class="btn hvr-hover text-white" data-fancybox-close="" >Add to cart</button>
+            <form method="POST" action="/customer/produk/add_to_cart/{{ produk.id_produk }}">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-5 col-md-6">
+                        <div class="single-product-slider">
+                            <div class="" role="listbox">
+                                <img class="d-block w-100"
+                                     src="{{ url_for('static', filename='images/' + produk.gambar) }}"
+                                     alt="First slide">
                             </div>
                         </div>
+                    </div>
+                    <div class="col-xl-7 col-lg-7 col-md-6">
+                        <div class="single-product-details">
+                            <h2>{{ produk.nama_product }}</h2>
+                            <h5>
+                                {% if produk.id_promo %}
+                                    <del>Rp. {{ '{:,}'.format(produk.harga) }}</del>
+                                    Rp. {{ '{:,}'.format(produk.harga - (produk.promo.diskon * produk.harga / 100)) }}
+                                {% else %}
+                                    Rp. {{ '{:,}'.format(produk.harga) }}
+                                {% endif %}
+                            </h5>
+                            <p class="available-stock"><span> {{ produk.stok }} available / <a
+                                    href="#">{{ produk.selling }} Terjual </a></span>
+                            <p>
+                            <h4>Description:</h4>
+                            <p>{{ produk.deskripsi }}</p>
+                            <ul>
+                                <li>
+                                    <div class="form-group quantity-box">
+                                        <label class="control-label">Quantity</label>
+                                        <input class="form-control" name="quantity" value="0" min="0" max="20"
+                                               type="number">
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="price-box-bar">
+                                <div class="cart-and-bay-btn">
+
+                                    <button type="submit" class="btn hvr-hover text-white" data-fancybox-close="">Add to
+                                        cart
+                                    </button>
+                                </div>
+                            </div>
 
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
         </div>
 
     </div>

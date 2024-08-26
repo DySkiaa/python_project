@@ -1,4 +1,31 @@
 {% extends 'templatte/templateadmin.html' %}
+{% block css %}
+    .status-box {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #fff; /* Text color for better readability */
+    display: inline-block;
+    }
+
+    .status-ditolak {
+    background-color: red;
+    }
+
+    .status-belum-mengirim {
+    background-color: orange;
+    }
+
+    .status-tunggu-verifikasi {
+    background-color: yellow;
+    color: #000; /* Text color for better readability on yellow background */
+    }
+
+    .status-pesanan-siap {
+    background-color: green;
+    }
+
+
+{% endblock %}
 {% block body %}
     <!-- BREADCRUMB-->
     <section class="au-breadcrumb m-t-75">
@@ -43,12 +70,11 @@
                             <thead>
                             <tr>
                                 <th class="text-center col-md-1">No</th>
-                                <th class="text-center col-md-3">Nama Customer</th>
-                                <th class="text-center col-md-1">ID Transaksi</th>
-                                <th class="text-center col-md-3">Total</th>
+                                <th class="text-center col-md-2">Nama Customer</th>
+                                <th class="text-center col-md-1">Total</th>
                                 <th class="text-center col-md-2">Tanggal Pesan</th>
-                                <th class="text-center col-md-2">Aksi</th>
-
+                                <th class="text-center col-md-2">Status</th>
+                                <th class="text-center col-md-3">Aksi</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,12 +83,25 @@
                                 <tr>
                                     <td class="text-center">{{ loop.index }}</td>
                                     <td class="text-center">{{ trs.user.fullname }}</td>
-                                    <td class="text-center">{{ trs.id_transaksi }}</td>
                                     <td class="text-center">Rp. {{ '{:,.0f}'.format(trs.total) }} </td>
                                     <td class="text-center">{{ trs.date.strftime('%Y-%m-%d %H:%M') }} </td>
-                                    <td class="text-center"><a
-                                            href="{{ url_for('transaksi_page.transaksidetail', id_transaksi=trs.id_transaksi) }}"
-                                            class="btn btn-primary">Detail</a>
+                                    <td class="text-center">
+                                        <div class="status-box
+                                            {% if trs.stat_pem.stats_pem_name == 'Belum Mengirim Bukti' %}status-belum-mengirim
+                                            {% elif trs.stat_pem.stats_pem_name == 'Tunggu Verifikasi' %}status-tunggu-verifikasi
+                                            {% elif trs.stat_pem.stats_pem_name == 'Pesanan Siap Diantar' %}status-pesanan-siap
+                                            {% elif trs.stat_pem.stats_pem_name == 'Bukti Ditolak' %}status-ditolak
+                                            {% endif %}">
+                                            {{ trs.stat_pem.stats_pem_name }}
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        {% if trs.stat_pem.stats_pem_name == 'Tunggu Verifikasi' %}
+                                            <a href="{{ url_for('transaksi_page.cekbukti', id_transaksi=trs.id_transaksi) }}"
+                                               class="btn btn-success">Cek Bukti</a>
+                                        {% endif %}
+                                        <a href="{{ url_for('transaksi_page.transaksidetail', id_transaksi=trs.id_transaksi) }}"
+                                           class="btn btn-primary">Detail</a>
                                         <a href="{{ url_for('transaksi_page.cetakpdf', id_transaksi=trs.id_transaksi) }}"
                                            class="btn btn-danger">PDF</a>
                                     </td>

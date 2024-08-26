@@ -12,7 +12,7 @@
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
             <li class="text-center">
-                <img src="../static/images/appetizer.jpg" alt="">
+                <img src="../static/images/baner1.jpg" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -38,7 +38,7 @@
                 </div>
             </li>
             <li class="text-center">
-                <img src="../static/images/salad.jpg" alt="">
+                <img src="../static/images/baner2.jpg" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -57,51 +57,6 @@
         </div>
     </div>
     <!-- End Slider -->
-
-    <!-- Start Categories  -->
-    <div class="categories-shop">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid" src="images/categories_img_01.jpg" alt=""/>
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid" src="images/categories_img_02.jpg" alt=""/>
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid" src="images/categories_img_03.jpg" alt=""/>
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Categories -->
-
-    <div class="box-add-products">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="offer-box-products">
-                        <img class="img-fluid" src="images/add-img-01.jpg" alt=""/>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="offer-box-products">
-                        <img class="img-fluid" src="images/add-img-02.jpg" alt=""/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Start Products  -->
     <div class="products-box">
         <div class="container">
@@ -114,30 +69,25 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
-                <form method="POST" action="{{ url_for('.dashboarduser') }}">
-                    <div class="col-lg-12">
-                        <div class="special-menu text-center">
-                            <div class="button-group filter-button-group">
-                                <button type="submit" name="id_kategori" value="semua"
-                                        class="kategori-button{% if pilihkategori == 'semua' %} active{% endif %}">
-                                    Semua
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <button type="button" data-category="semua" class="kategori-button active">
+                                Semua
+                            </button>
+                            {% for ktgr in kategori %}
+                                <button type="button" data-category="{{ ktgr.kategori }}" class="kategori-button">
+                                    {{ ktgr.kategori }}
                                 </button>
-                                {% for ktgr in kategori %}
-                                    <button type="submit" value="{{ ktgr.kategori }}"
-                                            class="kategori-button{% if pilihkategori == ktgr.kategori %} active{% endif %}"
-                                            name="id_kategori">{{ ktgr.kategori }}</button>
-                                {% endfor %}
-                                <br><br>
-
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-
-            <div class="row special-list">
+            <div class="row" id="productList">
                 {% for row in prdk %}
-                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                    <div class="col-lg-3 col-md-6 special-grid best-seller product"
+                         data-category="{{ row.id_kategori }}">
                         <div class="products-single fix">
                             <div class="box-img-hover">
                                 <div class="type-lb">
@@ -151,7 +101,10 @@
                                                data-toggle="tooltip" data-placement="right" title="Detail"><i
                                                     class="bi bi-info-circle-fill"></i></a></li>
                                     </ul>
-                                    <a class="cart" href="/productpembeli">-> Keranjang</a>
+                                    <button type="button" class="transparent-button"
+                                            data-id="{{ row.id_produk }}">
+                                        <a href="/customer/produk" class="cart">Keranjang</a>
+                                    </button>
                                 </div>
                             </div>
                             <div class="why-text">
@@ -164,7 +117,7 @@
             </div>
             <div class="special-menu text-center">
                 <div class="button-group filter-button-group">
-                    <button><a class="text-white" href="/productpembeli">Lihat Semua Produk</a></button>
+                    <button><a class="text-white" href="/customer/produk">Lihat Semua Produk</a></button>
                 </div>
             </div>
         </div>
@@ -258,4 +211,36 @@
         </div>
     </div>
 
+{% endblock %}
+{% block js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var buttons = document.querySelectorAll('.kategori-button');
+            var products = document.querySelectorAll('.product');
+
+            buttons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var category = this.getAttribute('data-category');
+
+                    // Hapus class 'active' dari semua tombol kategori
+                    buttons.forEach(function (btn) {
+                        btn.classList.remove('active');
+                    });
+
+                    // Tambahkan class 'active' ke tombol kategori yang diklik
+                    this.classList.add('active');
+
+                    // Tampilkan atau sembunyikan produk berdasarkan kategori
+                    products.forEach(function (product) {
+                        var productCategory = product.getAttribute('data-category');
+                        if (category === 'semua' || category === productCategory) {
+                            product.style.display = 'block';
+                        } else {
+                            product.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 {% endblock %}

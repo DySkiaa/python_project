@@ -13,7 +13,7 @@
                                     {% for item in breadcrumb_data %}
                                         <li class="list-inline-item {% if loop.last %}active{% endif %}">
                                             {% if not loop.last %}
-                                                <a href="{{ url_for('dashboard_page.dashboard') }}">{{ item }}</a>
+                                                <a href="/admin/dashboard">{{ item }}</a>
                                             {% else %}
                                                 {{ item }}
                                             {% endif %}
@@ -40,44 +40,44 @@
                 <small> Admin</small>
             </div>
             <div class="card-body card-block">
+                <form action="{{ url_for('dashboard_page.detailakun', id=current_user.id) }}" method="POST">
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Nama Lengkap</label>
 
-                <div class="form-floating mb-3">
-                    <label for="floatingInput">Nama Lengkap</label>
-                    
-                    <input type="text" class="form-control" name="new_fullname" id="floatingInput"
-                           placeholder="Nama Lengkap"
-                           value="{{ user.fullname }}">
-                </div>
-                <div class="form-floating mb-3">
-                    <label for="floatingInput">Usia</label>
-
-                    <input type="text" class="form-control" name="new_usia" id="floatingInput"
-                           placeholder="Usia"
-                           value="{{ user.usia }}">
-                </div>
-                <div class="form-floating mb-3">
-                    <label for="floatingInput">Alamat</label>
-
-                    <input type="text" class="form-control" name="new_alamat" id="floatingInput"
-                           placeholder="Alamat"
-                           value="{{ user.alamat }}">
-                </div>
-                <div class="form-floating mb-3">
-                    <label for="floatingInput">Nomor Telepon</label>
-
-                    <input type="number" class="form-control" name="new_notelp" id="floatingInput"
-                           placeholder="Nomor Telepon"
-                           value="{{ user.notelp }}">
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                        <input type="text" class="form-control" name="new_fullname" id="floatingInput"
+                               placeholder="Nama Lengkap"
+                               value="{{ user.fullname }}">
                     </div>
-                    <div class="col-2">
-                        <a href="{{ url_for('dashboard_page.dashboard') }}"
-                           class="btn btn-primary">Kembali</a>
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Usia</label>
+
+                        <input type="text" class="form-control" name="new_usia" id="floatingInput"
+                               placeholder="Usia"
+                               value="{{ user.usia }}">
                     </div>
-                </div>
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Alamat</label>
+
+                        <input type="text" class="form-control" name="new_alamat" id="floatingInput"
+                               placeholder="Alamat"
+                               value="{{ user.alamat }}">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Nomor Telepon</label>
+
+                        <input type="number" class="form-control" name="new_notelp" id="floatingInput"
+                               placeholder="Nomor Telepon"
+                               value="{{ user.notelp }}">
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                        </div>
+                        <div class="col-2">
+                            <a href="/admin/dashboard"
+                               class="btn btn-primary">Kembali</a>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
